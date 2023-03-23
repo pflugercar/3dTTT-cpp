@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
-#include <array>
 
 int getPlayers(const unsigned int &smallest, const unsigned int &largest);
 
-void printBoard(const char *board);
+void printBoard(const std::string board);
 
 int main() {
 
@@ -12,8 +11,8 @@ int main() {
 	const int maxPlayers = 4; 
 
 	int playerCount;
-	std::string playerNames[maxPlayers];
 	playerCount = getPlayers(minPlayers, maxPlayers);
+	std::string playerNames[playerCount];
 
 	// Initializing player names based on the max number of players possible
 	for(int i = 0; i < playerCount; i++)
@@ -21,9 +20,10 @@ int main() {
 
 	char pieces[4] = {'X','O','Y','Z'};
 
-	char board[28];
-	for (unsigned int element = 0; element < 27; element++)
-		board[element] = ' ';
+	//  back layers      123      012      901
+	//  middle layers       456      345      234
+	//  front layers           789      678      567
+	std::string board = "                           ";
 
 	printBoard(board);
 
@@ -48,20 +48,24 @@ int getPlayers(const unsigned int &smallest, const unsigned int &largest) {
 	return result;
 }
 
-void printBoard(const char *board) {
+void printBoard(const std::string b) {
 	std::cout << "Printing the board.\n\n";
 
-	for(int z = 0; z < 3; z++) {
-		for(int y = 0; y < 3; y++) {
-			if(y != 0)
-				std::cout << "---+---+---\n";
-			for(int x = 0; x < 3; x++) {
-				if(x != 0)
-					std::cout << " |";
-				std::cout << " " << board[x+y*3+z*9];
-			}
-			std::cout << "\n";
-		}
-		std::cout << "\n\n";
-	}
+	printf(" %c | %c | %c\n",			b[0],b[1],b[2]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c    Top\n",	b[3],b[4],b[5]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c\n",			b[6],b[7],b[8]);
+	printf("\n");
+	printf(" %c | %c | %c\n",			b[9],b[10],b[11]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c    Middle\n",	b[12],b[13],b[14]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c\n",			b[15],b[16],b[17]);
+	printf("\n");
+	printf(" %c | %c | %c\n",			b[18],b[19],b[20]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c    Bottom\n",	b[21],b[22],b[23]);
+	printf("---+---+---\n");
+	printf(" %c | %c | %c\n",			b[24],b[25],b[26]);
 }
